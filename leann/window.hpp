@@ -27,12 +27,3 @@ class MainWindow{
         SDL_Window* window;
         SDL_Renderer* renderer;
 };
-
-/*class Rectangle{
-    public:
-        Rectangle();
-        ~Rectangle();
-        int init(int x, int y, int w, int h);
-        void move();
-
-};*/

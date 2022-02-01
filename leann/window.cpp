@@ -1,8 +1,8 @@
-#include "window.hpp"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include "window.hpp"
 
 MainWindow::MainWindow()
 {
@@ -30,13 +30,14 @@ int MainWindow::init(const char* title,int width, int height)
     return EXIT_FAILURE;
   }
   isRunning = true;
+  return 0;
 }
 
 MainWindow::~MainWindow()
 {
- /* SDL_DestroyWindow(this->window);
+  SDL_DestroyWindow(this->window);
   SDL_DestroyRenderer(this->renderer);
-  SDL_Quit();  */
+  SDL_Quit();  
 }
 
 void MainWindow::handleEvents(){
@@ -53,31 +54,3 @@ void MainWindow::clean() {
   SDL_DestroyRenderer(renderer);
   SDL_Quit();
 }
-
-
-
-/*Rectangle::Rectangle(){
-  SDL_Rect rectangle = {};
-}
-
-int SDL_Rect(int x, int y, int w, int h){
-  rectangle = SDL_Rect(0,0,50,50);
-}*/
-
-
-/*void keyboard() {
-  const Uint8 *keystates = SDL_GetKeyboardState(NULL);
-
-  if (keystates[SDL_SCANCODE_UP]) {
-     ...
-  }
-  if (keystates[SDL_SCANCODE_DOWN]) {
-    ...
-  }
-  if (keystates[SDL_SCANCODE_LEFT]) {
-    ...
-  }
-  if (keystates[SDL_SCANCODE_RIGHT]) {
-    ...
-  }
-}*/
