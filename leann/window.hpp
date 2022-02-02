@@ -18,6 +18,7 @@ class MainWindow{
         SDL_Renderer* getRenderer(){
             return renderer;
         };
+
         bool running(){
             return isRunning;
         }

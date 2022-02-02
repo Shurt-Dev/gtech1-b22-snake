@@ -6,12 +6,15 @@
 #include <cstdio>
 
 
+
 class Rectangle{
     public:
         Rectangle();
         int init(int x, int y, int w, int h);
-        void keyboard();
+        void move();
         //void start();
+        void create(SDL_Renderer* renderer);
+
 
     private:
         Rectangle* rectangle;

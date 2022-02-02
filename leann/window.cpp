@@ -33,6 +33,8 @@ int MainWindow::init(const char* title,int width, int height)
   return 0;
 }
 
+void MainWindow::render() {} 
+
 MainWindow::~MainWindow()
 {
   SDL_DestroyWindow(this->window);
