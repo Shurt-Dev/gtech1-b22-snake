@@ -4,14 +4,15 @@
 #include <iostream>
 
 #include "window.hpp"
-#include "rect.hpp"
+#include "snake.hpp"
+#include "segment.hpp"
 
 
 int main(void) 
 {
     MainWindow window;
     MainWindow renderer;
-    Rectangle rect;
+    Snake rect;
     Uint32 frame_rate, frame_time, frame_delay = 20;
     
 
@@ -20,11 +21,10 @@ int main(void)
     SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255); // Donne la couleur du rectangle
    
     
-    
 
     while(window.running() == true){
+        rect.start();
         frame_rate = SDL_GetTicks();
-        //SDL_RenderPresent(window.getRenderer());
         rect.move();
 
         SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
@@ -35,8 +35,6 @@ int main(void)
         rect.create(window.getRenderer());    
         SDL_RenderPresent(window.getRenderer());
         
-        
-
 
         SDL_Event event;
         if(SDL_PollEvent(&event)){
@@ -49,6 +47,7 @@ int main(void)
         if(frame_time < frame_delay){
             SDL_Delay( frame_delay - frame_time );
         }
+        rect.coll();
     }
     
     return 0;

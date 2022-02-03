@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
-
+#pragma once
 
 
 class MainWindow{
