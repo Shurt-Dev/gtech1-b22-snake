@@ -18,14 +18,14 @@ int main(void)
     window.init("Snake", 1080, 720); // Creation de la fenetre 
     
     SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255); // Donne la couleur du rectangle
-    Snake *snake = new Snake(3, RIGHT);
+    Snake *snake = new Snake(3, RIGHT);  //new Snake(3, RIGHT)
 
-
-    while(window.running() == true){
-        snake->direction();
-        //snake->move();
-        //snake->turn();
+    while(window.running() == true ){
         frame_rate = SDL_GetTicks();
+        snake->direction();
+        snake->addHead();
+        snake->turn();
+        
         
         //snake->grow();
 
@@ -38,7 +38,7 @@ int main(void)
 
         SDL_Event event;
         if(SDL_PollEvent(&event)){
-            if(event.type == SDL_QUIT){
+            if(event.type == SDL_QUIT || snake->coll() == true ){
                 window.clean();
                 break;
             }

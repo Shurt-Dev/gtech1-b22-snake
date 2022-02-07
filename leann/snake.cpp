@@ -18,7 +18,7 @@ const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
 
 Snake::Snake(int length, int direction){
-  this->head = new Segment(300, 300, direction);
+  this->head = new Segment(xpos, ypos, direction);
   for(int i=0; i<length; i++){
     int x = xpos;
     int y = ypos;
@@ -53,7 +53,8 @@ void Snake::create(SDL_Renderer* renderer)
 {
   Segment *seg = this->head;
 
-  while(seg != NULL){
+  while(seg != NULL)
+  {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
     SDL_Rect body;
     body = {seg->getX(),seg->getY(),45,45};
@@ -68,22 +69,22 @@ void Snake::create(SDL_Renderer* renderer)
 
 int Snake::direction()
 {  
-  if ( keystates[SDL_SCANCODE_UP] ) {
+  if ( keystates[SDL_SCANCODE_UP] && this->dir != DOWN ) {
     this->dir = UP;
     ypos -= MOVE;
   }
 
-  else if ( keystates[SDL_SCANCODE_DOWN] ) {
+  else if ( keystates[SDL_SCANCODE_DOWN] && this->dir != UP ) {
     this->dir = DOWN;
     ypos += MOVE;
   }
     
-  else if ( keystates[SDL_SCANCODE_LEFT] ) {
+  else if ( keystates[SDL_SCANCODE_LEFT] && this->dir != RIGHT) {
     this->dir = LEFT;
     xpos -= MOVE;
   }
     
-  else if ( keystates[SDL_SCANCODE_RIGHT] ) {
+  else if ( keystates[SDL_SCANCODE_RIGHT] && this->dir != LEFT ) {
     this->dir = RIGHT;
     xpos += MOVE;
   }      
@@ -94,6 +95,7 @@ int Snake::direction()
 
 void Snake::move()
 {
+  
   del();
   addHead();
 }
@@ -103,13 +105,10 @@ void Snake::move()
 void Snake::addHead()
 {
   int x = head->getX();
-  std::cout << "fuck" << std::endl;
   int y = head->getY();
 
-  std::cout << "avant add" << std::endl;
   if(head == NULL)
   {
-    std::cout << "head null" << std::endl;
     return;
   }
 
@@ -134,7 +133,6 @@ void Snake::addHead()
     default:
       break;
   }
-  std::cout << "fin switch" << std::endl;
 
   Segment *newSegment = new Segment(x, y, dir);
   newSegment->setX(x);
@@ -142,7 +140,6 @@ void Snake::addHead()
   newSegment->setDir(head->getDir());
   newSegment->next = head;
   head = newSegment;
-  std::cout << head << std::endl;
 }
 
 // FONCTION QUI SUPPRIME LE DERNIER SEGMENT DU SERPENT
@@ -151,25 +148,18 @@ void Snake::del(){
   Segment *seg = head;
   Segment *tail = NULL;
 
-  std::cout << "avant del" << std::endl;
-  
   if(head->next == NULL)
   {
-    std::cout << "next head NULL" << std::endl;
     head = NULL;
   }
-  else
+  while(seg->next->next != NULL)
   {
-    std::cout << "else" << std::endl;
-    while(seg->next->next != NULL)
-    {
-      std::cout << "while" << std::endl;
-      seg = seg->next;
-    }
-    tail = seg->next;
-    seg->next == NULL;
-    delete tail;
+    std::cout << "while" << std::endl;
+    seg = seg->next;
   }
+  tail = seg->next;
+  seg->next == NULL;
+  delete tail;
 }
 
 // FONCTION QUI AJOUTE UN SEGMENT A LA QUEUE DU SERPENT QUAND IL MANGE UN FRUIT
