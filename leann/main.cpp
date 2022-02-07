@@ -8,33 +8,33 @@
 #include "segment.hpp"
 
 
+#define RIGHT 4
+  
 int main(void) 
 {
     MainWindow window;
-    MainWindow renderer;
-    Snake rect;
     Uint32 frame_rate, frame_time, frame_delay = 20;
-    
 
-    window.init("Snake", 1080, 720); // Creation de la fenetre
-    renderer.render();
-    SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255); // Donne la couleur du rectangle
-   
+    window.init("Snake", 1080, 720); // Creation de la fenetre 
     
+    SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255); // Donne la couleur du rectangle
+    Snake *snake = new Snake(3, RIGHT);
+
 
     while(window.running() == true){
-        rect.start();
+        snake->direction();
+        //snake->move();
+        //snake->turn();
         frame_rate = SDL_GetTicks();
-        rect.move();
+        
+        //snake->grow();
 
-        SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255); // Donne la couleur du render
         SDL_RenderClear(window.getRenderer());
-        SDL_SetRenderDrawColor(window.getRenderer(), 255, 0, 0, 255);
-        
+        SDL_SetRenderDrawColor(window.getRenderer(), 255, 65, 90, 255); // Donne la couleur du rectangle
 
-        rect.create(window.getRenderer());    
+        snake->create(window.getRenderer());    
         SDL_RenderPresent(window.getRenderer());
-        
 
         SDL_Event event;
         if(SDL_PollEvent(&event)){
@@ -47,8 +47,7 @@ int main(void)
         if(frame_time < frame_delay){
             SDL_Delay( frame_delay - frame_time );
         }
-        rect.coll();
     }
-    
+
     return 0;
 }

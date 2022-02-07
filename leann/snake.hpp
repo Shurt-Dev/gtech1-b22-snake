@@ -6,24 +6,28 @@
 #include <string>
 #include <cstdio>
 
-//#include "segment.hpp"
+#include "segment.hpp"
 
 class Snake{
     public:
-        Snake();
-        int init(int x, int y, int w, int h);
+        Snake(int length, int direction);
+        ~Snake();
         void move();
-        void start();
         void create(SDL_Renderer* renderer);
-        void eat();
-        //void turn();
-        void coll();
-        void dir();
+        //void eat();
+        //void grow();
+        void del();
+        void addHead();
+        void addBack();
+        void turn();
+        //void print();
+        int direction();
+        Segment getHead();
+        bool coll();
 
     private:
-        //int dir;
-        //Segment* head;
-        Snake* snake;
+        Segment* head = NULL;
         int ypos = 300;
         int xpos = 300;
+        int dir;
 };

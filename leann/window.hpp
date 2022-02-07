@@ -13,7 +13,6 @@ class MainWindow{
         ~MainWindow();
         int init(const char* title, int width, int height);
         void handleEvents();
-        void render();
         void clean();
         SDL_Renderer* getRenderer(){
             return renderer;

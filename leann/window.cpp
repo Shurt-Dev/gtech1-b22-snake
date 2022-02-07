@@ -10,6 +10,8 @@ MainWindow::MainWindow()
   this->renderer = NULL;
 }
 
+  // FONCTION INITIALISATION DE FENETRE + VERIF ERREURS
+
 int MainWindow::init(const char* title,int width, int height)
 {
   if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -33,14 +35,14 @@ int MainWindow::init(const char* title,int width, int height)
   return 0;
 }
 
-void MainWindow::render() {} 
-
 MainWindow::~MainWindow()
 {
   SDL_DestroyWindow(this->window);
   SDL_DestroyRenderer(this->renderer);
   SDL_Quit();  
 }
+
+  // FONCTION GESTION DES EVENTS
 
 void MainWindow::handleEvents(){
   SDL_Event event;
@@ -50,6 +52,8 @@ void MainWindow::handleEvents(){
     SDL_Quit();
   }
 }
+
+  // FONCTION DESTRUCTION DE FENETRE, RENDER
 
 void MainWindow::clean() {
   SDL_DestroyWindow(window);

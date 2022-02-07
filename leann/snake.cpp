@@ -7,61 +7,209 @@
 #include "window.hpp"
 #include "segment.hpp"
 
+#define UP 1
+#define DOWN 2
+#define LEFT 3
+#define RIGHT 4
+#define MOVE 7
 
-Snake rect;
 SDL_Renderer* renderer;
-Snake dir;
 const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
 
-Snake::Snake(){
-  this->snake = NULL;
+Snake::Snake(int length, int direction){
+  this->head = new Segment(300, 300, direction);
+  for(int i=0; i<length; i++){
+    int x = xpos;
+    int y = ypos;
+    switch (direction)
+    {
+      case 1:
+      case 2:
+        ypos += MOVE;
+        break;
+      case 3:
+      case 4:
+        xpos += MOVE;
+        break;
+      default:
+        break;
+    }   
+  }
+  this->dir = direction;
 }
 
-
-int Snake::init(int x, int y, int w, int h){
-
-  return 0;
+Segment Snake::getHead(){
+    return *head;
 }
 
-void Snake::create(SDL_Renderer* renderer){
-  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
-  SDL_Rect snake;
-  snake = {rect.xpos,rect.ypos,45,45}; // Taille et coordonnées du rectangle
-  SDL_RenderDrawRect(renderer, &snake); // Dessine le rectangle
-        
+Snake::~Snake(){
+  if (this->head != NULL) delete this->head;
 }
 
-void Snake::start(){
-  rect.xpos += 1;
-}
+// FONCTION CREATION DU SERPENT
 
-void Snake::move() 
+void Snake::create(SDL_Renderer* renderer)
 {
+  Segment *seg = this->head;
 
+  while(seg != NULL){
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
+    SDL_Rect body;
+    body = {seg->getX(),seg->getY(),45,45};
+
+    SDL_RenderDrawRect(renderer, &body); // Dessine la tête du serpent
+    seg = seg->next;
+  }
+}
+
+
+// FONCTION DIRECTION DU SERPENT
+
+int Snake::direction()
+{  
   if ( keystates[SDL_SCANCODE_UP] ) {
-    if ( rect.ypos <= 720 )
-      rect.ypos -= 7;
+    this->dir = UP;
+    ypos -= MOVE;
   }
 
-  if ( keystates[SDL_SCANCODE_DOWN] ) {
-      if ( rect.ypos <= 720 )
-        rect.ypos += 7;
+  else if ( keystates[SDL_SCANCODE_DOWN] ) {
+    this->dir = DOWN;
+    ypos += MOVE;
   }
-  
-    if ( keystates[SDL_SCANCODE_LEFT] ) {
-      if ( rect.xpos <= 1080 )
-        rect.xpos -= 7;
+    
+  else if ( keystates[SDL_SCANCODE_LEFT] ) {
+    this->dir = LEFT;
+    xpos -= MOVE;
   }
+    
+  else if ( keystates[SDL_SCANCODE_RIGHT] ) {
+    this->dir = RIGHT;
+    xpos += MOVE;
+  }      
+  return this->dir;  
+}
+
+// FONCTION QUI BOUGE LE SERPENT
+
+void Snake::move()
+{
+  del();
+  addHead();
+}
+
+// FONCTION QUI AJOUTE UN SEGMENT A LA TETE DU SERPENT
+
+void Snake::addHead()
+{
+  int x = head->getX();
+  std::cout << "fuck" << std::endl;
+  int y = head->getY();
+
+  std::cout << "avant add" << std::endl;
+  if(head == NULL)
+  {
+    std::cout << "head null" << std::endl;
+    return;
+  }
+
+  switch (head->getDir())
+  {
+    case UP:
+      y -= MOVE;
+      break;
+
+    case DOWN:
+      y += MOVE;
+      break;
+
+    case LEFT:
+      x -= MOVE;
+      break;  
+    
+    case RIGHT:
+      x += MOVE;
+      break;
+
+    default:
+      break;
+  }
+  std::cout << "fin switch" << std::endl;
+
+  Segment *newSegment = new Segment(x, y, dir);
+  newSegment->setX(x);
+  newSegment->setY(y);
+  newSegment->setDir(head->getDir());
+  newSegment->next = head;
+  head = newSegment;
+  std::cout << head << std::endl;
+}
+
+// FONCTION QUI SUPPRIME LE DERNIER SEGMENT DU SERPENT
+
+void Snake::del(){
+  Segment *seg = head;
+  Segment *tail = NULL;
+
+  std::cout << "avant del" << std::endl;
   
-  if ( keystates[SDL_SCANCODE_RIGHT] ) {
-    if ( rect.xpos <= 1080 )
-      rect.xpos += 7;
+  if(head->next == NULL)
+  {
+    std::cout << "next head NULL" << std::endl;
+    head = NULL;
+  }
+  else
+  {
+    std::cout << "else" << std::endl;
+    while(seg->next->next != NULL)
+    {
+      std::cout << "while" << std::endl;
+      seg = seg->next;
+    }
+    tail = seg->next;
+    seg->next == NULL;
+    delete tail;
   }
 }
 
-void Snake::coll(){
-  if( rect.xpos >= 1080 || rect.xpos <=0 || rect.ypos >= 720 || rect.ypos <=0){
-    std::cout << "fin fenetre";
+// FONCTION QUI AJOUTE UN SEGMENT A LA QUEUE DU SERPENT QUAND IL MANGE UN FRUIT
+
+void Snake::addBack(){
+}
+
+
+
+
+
+void Snake::turn()
+{
+  head->setDir(dir);
+}
+
+// FONCTION GRANDISSEMENT DU SERPENT
+
+/*void Snake::grow(){
+
+  if ( keystates[SDL_SCANCODE_SPACE] ) {
+    Segment *newSegment = new Segment(xpos, ypos);
+  }
+}*/
+
+
+
+// FONCTION COLLISION DU SERPENT
+
+bool Snake::coll()
+{
+  if( ypos > 720 || ypos < 0 || xpos > 1080 || xpos < 0  ) {
+    return true;
+  }
+  else {
+    return false;
   }
 }
+
+// FONCTION QUI RECUPERE LES COORDONEES DE LA TETE DU SERPENT
+
+
+
