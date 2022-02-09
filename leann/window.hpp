@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
-
+#pragma once
 
 
 class MainWindow{
@@ -13,11 +13,11 @@ class MainWindow{
         ~MainWindow();
         int init(const char* title, int width, int height);
         void handleEvents();
-        void render();
         void clean();
         SDL_Renderer* getRenderer(){
             return renderer;
         };
+
         bool running(){
             return isRunning;
         }
@@ -27,12 +27,3 @@ class MainWindow{
         SDL_Window* window;
         SDL_Renderer* renderer;
 };
-
-/*class Rectangle{
-    public:
-        Rectangle();
-        ~Rectangle();
-        int init(int x, int y, int w, int h);
-        void move();
-
-};*/

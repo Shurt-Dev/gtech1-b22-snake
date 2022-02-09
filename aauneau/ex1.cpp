@@ -1,15 +1,5 @@
 #include <SDL2/SDL.h>
-#include <stdio.h>
-#include <iostream>
-using namespace std;
-#include <stdlib.h>
 #include "ex1.hpp"
- 
-int main(int argc, char *argv[])
-{
-    MainSDLWindow win;
-    win.Init("Snake",600, 600);
-}
 
 MainSDLWindow::MainSDLWindow(){
     this->window = NULL;
@@ -45,9 +35,9 @@ int MainSDLWindow::Init(const char* name, int l, int h){
         return EXIT_FAILURE;
     }
 
-    SDL_Delay(3000);  //pause de 3 secondes
+    /*SDL_Delay(10000);  //pause de 10 secondes
 
-    SDL_DestroyWindow(fenetre);
-    SDL_Quit();  //on quitte la SDL
+    SDL_DestroyWindow(fenetre);*/
+    SDL_Quit();  //on quitte la SDL*/
     return 0;
 };
