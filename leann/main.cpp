@@ -23,8 +23,8 @@ int main(void)
     while(window.running() == true ){
         frame_rate = SDL_GetTicks();
         snake->direction();
-        snake->addHead();
-        snake->turn();
+        snake->move();
+        //snake->turn();
         
         
         //snake->grow();
@@ -38,7 +38,7 @@ int main(void)
 
         SDL_Event event;
         if(SDL_PollEvent(&event)){
-            if(event.type == SDL_QUIT || snake->coll() == true ){
+            if(event.type == SDL_QUIT /*|| snake->coll() == true*/ ){
                 window.clean();
                 break;
             }
