@@ -39,12 +39,8 @@ Snake::Snake(int length, int direction){
   this->dir = direction;
 }
 
-Segment Snake::getHead(){
-    return *head;
-}
-
 Snake::~Snake(){
-  if (this->head != NULL) delete this->head;
+  //if (this->head != NULL) delete this->head;
 }
 
 // FONCTION CREATION DU SERPENT
@@ -58,7 +54,7 @@ void Snake::create(SDL_Renderer* renderer)
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
     SDL_Rect body;
     body = {seg->getX(),seg->getY(),45,45};
-
+    SDL_RenderFillRect(renderer, &body);
     SDL_RenderDrawRect(renderer, &body); // Dessine la tête du serpent
     seg = seg->next;
   }
@@ -91,12 +87,16 @@ int Snake::direction()
   return this->dir;  
 }
 
+Segment Snake::getHead(){
+    return *head;
+}
+
 // FONCTION QUI BOUGE LE SERPENT
 
 void Snake::move()
 {
-  
-  del();
+  turn();
+  //del();
   addHead();
 }
 
@@ -148,18 +148,26 @@ void Snake::del(){
   Segment *seg = head;
   Segment *tail = NULL;
 
+
   if(head->next == NULL)
   {
+    std::cout << "head next null" << std::endl;
     head = NULL;
   }
+
   while(seg->next->next != NULL)
   {
     std::cout << "while" << std::endl;
     seg = seg->next;
   }
+  
   tail = seg->next;
   seg->next == NULL;
+  std::cout << "tail null" << std::endl;
+
   delete tail;
+ 
+
 }
 
 // FONCTION QUI AJOUTE UN SEGMENT A LA QUEUE DU SERPENT QUAND IL MANGE UN FRUIT
@@ -198,8 +206,3 @@ bool Snake::coll()
     return false;
   }
 }
-
-// FONCTION QUI RECUPERE LES COORDONEES DE LA TETE DU SERPENT
-
-
-
