@@ -16,7 +16,6 @@ class Snake{
         void create(SDL_Renderer* renderer);
         //void eat();
         //void grow();
-        void del();
         void addHead();
         void addBack();
         void turn();

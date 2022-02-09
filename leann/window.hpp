@@ -14,9 +14,7 @@ class MainWindow{
         int init(const char* title, int width, int height);
         void handleEvents();
         void clean();
-        SDL_Renderer* getRenderer(){
-            return renderer;
-        };
+        SDL_Renderer* getRenderer();
 
         bool running(){
             return isRunning;

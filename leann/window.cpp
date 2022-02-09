@@ -60,3 +60,7 @@ void MainWindow::clean() {
   SDL_DestroyRenderer(renderer);
   SDL_Quit();
 }
+
+SDL_Renderer* MainWindow::getRenderer(){
+  return renderer;
+}

@@ -38,7 +38,7 @@ int main(void)
 
         SDL_Event event;
         if(SDL_PollEvent(&event)){
-            if(event.type == SDL_QUIT /*|| snake->coll() == true*/ ){
+            if(event.type == SDL_QUIT || snake->coll() == true ){
                 window.clean();
                 break;
             }
